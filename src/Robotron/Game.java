@@ -27,11 +27,19 @@ public class Game extends Canvas implements Runnable{
     public BasicEnemy be;
     public SmartEnemy sm;
     // hello
+    private Menu menu;
 
+    // Allows the program to differentiate in where it is
+    public enum State {
+        Menu, Help, Game,
+    };
 
+    public State GameState = State.Menu;
 
     public Game(){
         handler = new Handler();
+        menu = new Menu(this, handler);
+        this.addMouseListener(menu);
 
         keyInput = new KeyInput(handler);
         this.addKeyListener(keyInput);
@@ -41,16 +49,16 @@ public class Game extends Canvas implements Runnable{
         hud = new HUD();
         r = new Random();
 
-        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player, handler));
-        handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
-        handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
-        handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
-        handler.addObject(new MineEnemy(500,550,ID.MineEnemy, handler));
-        handler.addObject(new MineEnemy(120,480,ID.MineEnemy, handler));
-        handler.addObject(new MineEnemy(420,80,ID.MineEnemy, handler));
-
-        handler.addObject(new HealingEnemy(300,300,ID.HealingEnemy,handler));
-        handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy,handler));
+//        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player, handler));
+//        handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
+//        handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
+//        handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
+//        handler.addObject(new MineEnemy(500,550,ID.MineEnemy, handler));
+//        handler.addObject(new MineEnemy(120,480,ID.MineEnemy, handler));
+//        handler.addObject(new MineEnemy(420,80,ID.MineEnemy, handler));
+//
+//        handler.addObject(new HealingEnemy(300,300,ID.HealingEnemy,handler));
+//        handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy,handler));
 
 
     }
@@ -103,7 +111,11 @@ public class Game extends Canvas implements Runnable{
     }
     private void tick(){
         handler.tick();
-        hud.tick();
+        if (GameState == State.Game) {
+            hud.tick();
+        } else if (GameState == State.Menu || GameState == State.Help) {
+            menu.tick();
+        }
 
     }
     private void render(){
@@ -116,7 +128,11 @@ public class Game extends Canvas implements Runnable{
         g.setColor(Color.black);
         g.fillRect(0,0, WIDTH, HEIGHT);
         handler.render(g);
-        hud.render(g);
+        if (GameState == State.Game) {
+            hud.render(g);
+        } else if (GameState == State.Menu || GameState == State.Help) {
+            menu.render(g);
+        }
         g.dispose();
         bs.show();
     }
