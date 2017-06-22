@@ -10,6 +10,8 @@ import java.util.Random;
 /**
  * Created by Karan on 22-6-2017.
  */
+
+// hello
 public class SmartEnemy extends GameObject
 {
 
