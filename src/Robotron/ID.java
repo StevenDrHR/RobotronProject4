@@ -8,4 +8,5 @@ public enum ID {
     Projectile(),
     BasicEnemy(),
     HealingEnemy(),
+    SmartEnemy(),
 }

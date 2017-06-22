@@ -45,7 +45,8 @@ public class Game extends Canvas implements Runnable{
         handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
         handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
         handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
-        handler.addObject(new SmartEnemy(600,500,ID.SmartEnemy,handler));
+        handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy,handler));
+        handler.addObject(new HealingEnemy(300,420,ID.HealingEnemy,handler));
 
     }
 

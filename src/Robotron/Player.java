@@ -34,7 +34,7 @@ public class Player extends GameObject {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 32, 32);
+		return new Rectangle((int)x, (int)y, 32, 32);
 	}
 
 	@Override
@@ -92,17 +92,12 @@ public class Player extends GameObject {
 					HUD.HEALTH -= 2;
 				}
 			}
-			// else if (tempObject.getId() == ID.BasicHealth) {
-			// if (getBounds().intersects(tempObject.getBounds())) {
-			// HUD.HEALTH += 2;
-			// handler.removeObject(tempObject);
-			// }
-			// }
-			// else if (tempObject.getId() == ID.FastEnemy) {
-			// if (getBounds().intersects(tempObject.getBounds())) {
-			// HUD.HEALTH -= 3;
-			// }
-			// }
+			if (tempObject.getId() == ID.SmartEnemy) {
+				if (getBounds().intersects(tempObject.getBounds())) {
+					HUD.HEALTH -= 4;
+				}
+			}
+
 
 		}
 	}// collision codeollision code
@@ -111,7 +106,7 @@ public class Player extends GameObject {
 	public void render(Graphics g) {
 		if (id == ID.Player)
 			;
-		g.drawImage(img, x, y, 32, 32, null);
+		g.drawImage(img, (int)x, (int)y, 32, 32, null);
 
 	}
 

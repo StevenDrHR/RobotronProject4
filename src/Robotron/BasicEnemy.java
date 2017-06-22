@@ -29,7 +29,7 @@ public class BasicEnemy extends GameObject {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 52, 52);
+		return new Rectangle((int)x,(int) y, 52, 52);
 	}
 
 	public void tick() {
@@ -57,7 +57,7 @@ public class BasicEnemy extends GameObject {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(img, x, y, 52, 52, null);
+		g.drawImage(img, (int)x,(int) y, 52, 52, null);
 	}
 
 	private void collision() {

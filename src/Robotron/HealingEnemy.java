@@ -70,13 +70,13 @@ public class HealingEnemy extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(img, x, y, 52, 52, null);
+		g.drawImage(img, (int)x, (int)y, 52, 52, null);
 
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 52, 52);
+		return new Rectangle((int)x, (int)y, 52, 52);
 	}
 
 }
