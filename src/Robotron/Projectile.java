@@ -55,7 +55,20 @@ public class Projectile extends GameObject {
                     }
 
                 }
-            } else if (tempObject.getId() == ID.HealingEnemy) {
+            } if (tempObject.getId() == ID.MineEnemy) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    if (tempObject.Health == 0) {
+                        System.out.println("Mine has been destroyed!");
+                        handler.removeObject(tempObject);
+
+                    } else {
+                        tempObject.Health = 0;
+                        System.out.println("Not possible...");
+                    }
+
+                }
+            }
+            else if (tempObject.getId() == ID.HealingEnemy) {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     if (tempObject.Health == 0) {
                         System.out.println("Healingenemy has been killed!");
@@ -63,9 +76,8 @@ public class Projectile extends GameObject {
                         HUD.HEALTH += 10;
                     }
 
-
-                }
-            }
+				}
+			}
 
                 else if (tempObject.getId() == ID.SmartEnemy) {
                     if (getBounds().intersects(tempObject.getBounds())) {

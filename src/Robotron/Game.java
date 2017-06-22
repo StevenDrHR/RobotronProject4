@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
+//import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import static javafx.application.Platform.exit;
 
 
@@ -45,8 +45,13 @@ public class Game extends Canvas implements Runnable{
         handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
         handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
         handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
+        handler.addObject(new MineEnemy(500,550,ID.MineEnemy, handler));
+        handler.addObject(new MineEnemy(120,480,ID.MineEnemy, handler));
+        handler.addObject(new MineEnemy(420,80,ID.MineEnemy, handler));
+
+        handler.addObject(new HealingEnemy(300,300,ID.HealingEnemy,handler));
         handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy,handler));
-        handler.addObject(new HealingEnemy(300,420,ID.HealingEnemy,handler));
+
 
     }
 
