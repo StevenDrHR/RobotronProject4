@@ -13,7 +13,7 @@ public class HUD {
     private int level = 1;
 
     public void tick(){
-        HEALTH = Game.clamp(HEALTH,0,100);
+        HEALTH = (int) Game.clamp(HEALTH,0,100);
 
     }
 

@@ -6,14 +6,14 @@ import java.awt.*;
 
 
 public abstract class GameObject {
-    protected int x,y;  //only inheritable who inherits GameObject
+    protected float x,y;  //only inheritable who inherits GameObject
     protected ID id;
     protected double velX, velY;
-    protected int facing;
-    protected int GoingUP;
-    protected int Health = 0;
+    protected float facing;
+    protected float GoingUP;
+    protected  float Health = 0;
 
-    public GameObject(int x, int y, ID id){
+    public GameObject(float x, float y, ID id){
         this.x = x;
         this.y = y;
         this.id = id;
@@ -34,10 +34,10 @@ public abstract class GameObject {
     public void setVelY (double velY){
         this.velY = velY;
     }
-    public int getX(){
+    public float getX(){
         return x;
     }
-    public int getY(){
+    public float getY(){
         return y;
     }
     public double getVelX(){
@@ -46,6 +46,6 @@ public abstract class GameObject {
     public double getVelY(){
         return velY;
     }
-    public int getFacing(){return facing;}
-    public int getGoingUP(){return GoingUP;}
+    public float getFacing(){return facing;}
+    public float getGoingUP(){return GoingUP;}
 }
