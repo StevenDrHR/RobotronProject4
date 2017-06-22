@@ -1,26 +1,27 @@
 package Robotron;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Random;
 
-public class BasicEnemy extends GameObject {
+import javax.imageio.ImageIO;
+
+public class HealingEnemy extends GameObject {
 	private Handler handler;
 	private BufferedImage img;
-	public int time = 0;
-	public int timeY = 0;
+	public int time;
+	public int timeY;
 
-	public BasicEnemy(int x, int y, ID id, Handler handler) {
+	public HealingEnemy(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 		this.handler = handler;
-		velX = 4;
-		velY = 4;
+		this.velX = 4;
+		this.velY = 4;
 		try {
 			// Grab the InputStream for the image.
-			img = ImageIO.read(new FileInputStream("enemyrobot.png"));
+			img = ImageIO.read(new FileInputStream("healrobot.png"));
 
 		} catch (IOException e) {
 			System.out.println("The image was not loaded.");
@@ -28,10 +29,7 @@ public class BasicEnemy extends GameObject {
 		}
 	}
 
-	public Rectangle getBounds() {
-		return new Rectangle(x, y, 52, 52);
-	}
-
+	@Override
 	public void tick() {
 		x += velX;
 		y += velY;
@@ -53,11 +51,6 @@ public class BasicEnemy extends GameObject {
 			velX *= -1;
 
 		collision();
-
-	}
-
-	public void render(Graphics g) {
-		g.drawImage(img, x, y, 52, 52, null);
 	}
 
 	private void collision() {
@@ -67,7 +60,6 @@ public class BasicEnemy extends GameObject {
 			if (tempObject.getId() == ID.Projectile) {
 				if (getBounds().intersects(tempObject.getBounds())) {
 					handler.removeObject(tempObject);
-
 				}
 
 			}
@@ -75,4 +67,16 @@ public class BasicEnemy extends GameObject {
 		}
 
 	}
+
+	@Override
+	public void render(Graphics g) {
+		g.drawImage(img, x, y, 52, 52, null);
+
+	}
+
+	@Override
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, 52, 52);
+	}
+
 }

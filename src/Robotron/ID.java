@@ -7,4 +7,5 @@ public enum ID {
     Player(),
     Projectile(),
     BasicEnemy(),
+    HealingEnemy(),
 }
