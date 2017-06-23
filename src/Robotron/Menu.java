@@ -11,10 +11,12 @@ import Robotron.Game.State;
 public class Menu extends MouseAdapter {
 	private Game game;
 	private Handler handler;
+	private HUD hud;
 
-	public Menu(Game game, Handler handler) {
+	public Menu(Game game, Handler handler, HUD hud) {
 		this.game = game;
 		this.handler = handler;
+		this.hud = hud;
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -38,13 +40,20 @@ public class Menu extends MouseAdapter {
 			if (mouseOver(mx, my, 515, 600, 250, 90)) {
 				System.exit(1);
 			}
+			if (mouseOver(mx, my, 515, 475, 250, 90)) {
+				game.GameState = State.Help;
+				// laat iets zien
+			}
 		}
-		if (mouseOver(mx, my, 515, 475, 250, 90)) {
-			game.GameState = State.Help;
-			// laat iets zien
-		}
+
 		if (game.GameState == State.Help) {
 			if (mouseOver(mx, my, 515, 600, 250, 90)) {
+				game.GameState = State.Menu;
+				return;
+			}
+		}
+		if(game.GameState==State.End){
+			if(mouseOver(mx,my,515,600,250,90)){
 				game.GameState = State.Menu;
 				return;
 			}
@@ -95,6 +104,15 @@ public class Menu extends MouseAdapter {
 			g.setFont(fnt2);
 			g.drawRect(515, 600, 250, 90);
 			g.drawString("Back", 580, 665);
+		}else if (game.GameState == State.End) {
+			g.setFont(fnt);
+			g.setColor(Color.white);
+			g.drawString("GAME OVER", 320, 110);
+
+			g.setFont(fnt2);
+			g.drawString("Your score is: " + hud.getScore(), 400, 400);
+			g.drawRect(395, 600, 460, 90);
+			g.drawString("Go to menu", 460, 665);
 		}
 	}
 }

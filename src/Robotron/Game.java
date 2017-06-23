@@ -31,14 +31,15 @@ public class Game extends Canvas implements Runnable{
 
     // Allows the program to differentiate in where it is
     public enum State {
-        Menu, Help, Game,
+        Menu, Help, Game,End,
     };
 
-    public State GameState = State.Menu;
+    public State GameState = State.End;
 
     public Game(){
+        hud = new HUD();
         handler = new Handler();
-        menu = new Menu(this, handler);
+        menu = new Menu(this, handler, hud);
         this.addMouseListener(menu);
 
         keyInput = new KeyInput(handler);
@@ -46,7 +47,6 @@ public class Game extends Canvas implements Runnable{
 
 
         new window(WIDTH, HEIGHT,"Robotron", this);
-        hud = new HUD();
         r = new Random();
 
 //        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player, handler));
@@ -113,7 +113,12 @@ public class Game extends Canvas implements Runnable{
         handler.tick();
         if (GameState == State.Game) {
             hud.tick();
-        } else if (GameState == State.Menu || GameState == State.Help) {
+            if(hud.HEALTH <= 0){
+                hud.HEALTH = 100;
+                handler.clearHandler();
+                GameState = State.End;
+            }
+        } else if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.tick();
         }
 
@@ -130,7 +135,7 @@ public class Game extends Canvas implements Runnable{
         handler.render(g);
         if (GameState == State.Game) {
             hud.render(g);
-        } else if (GameState == State.Menu || GameState == State.Help) {
+        } else if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.render(g);
         }
         g.dispose();
