@@ -25,7 +25,7 @@ public class Menu extends MouseAdapter {
 		if (game.GameState == State.Menu) {
 			if (mouseOver(mx, my, 515, 350, 250, 90)) {
 				game.GameState = State.Game;
-				handler.addObject(new Player(game.WIDTH/2-32,game.HEIGHT/2-32, ID.Player, handler));
+				handler.addObject(new Player(game.WIDTH/2-32,game.HEIGHT/2-32, ID.Player, handler, game));
        	 		handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
         		handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
 				handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
@@ -53,7 +53,7 @@ public class Menu extends MouseAdapter {
 			}
 		}
 		if(game.GameState==State.End){
-			if(mouseOver(mx,my,515,600,250,90)){
+			if(mouseOver(mx,my,395,600,460,90)){
 				game.GameState = State.Menu;
 				return;
 			}

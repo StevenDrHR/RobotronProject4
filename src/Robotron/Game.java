@@ -34,7 +34,7 @@ public class Game extends Canvas implements Runnable{
         Menu, Help, Game,End,
     };
 
-    public State GameState = State.End;
+    public State GameState = State.Menu;
 
     public Game(){
         hud = new HUD();
@@ -113,12 +113,12 @@ public class Game extends Canvas implements Runnable{
         handler.tick();
         if (GameState == State.Game) {
             hud.tick();
-            if(hud.HEALTH <= 0){
-                hud.HEALTH = 100;
-                handler.clearHandler();
-                GameState = State.End;
-            }
-        } else if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
+           // if(hud.HEALTH <= 0){
+               // hud.HEALTH = 100;
+               // handler.clearHandler();
+               // GameState = State.End;
+
+        }  if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.tick();
         }
 

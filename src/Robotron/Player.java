@@ -17,11 +17,13 @@ import Robotron.Game.State;
  */
 public class Player extends GameObject {
 	Handler handler;
+	Game game;
 	private BufferedImage img;
 
-	public Player(int x, int y, ID id, Handler handler) {
+	public Player(int x, int y, ID id, Handler handler, Game game) {
 		super(x, y, id);
 		this.handler = handler;
+		this.game = game;
 		try {
 			// Grab the InputStream for the image.
 			img = ImageIO.read(new FileInputStream("robot.png"));
@@ -85,7 +87,11 @@ public class Player extends GameObject {
                facing = 0;
                velY = 50; // how fast the player goes down
                 y += velY; // drops the player down
-		        if (y >= 1050){} }  // needs to be filled in with the end gamestate
+		        if (y >= 2050){  //checks position of the player
+		            game.GameState = State.End; //sets gamestate to end screen
+                    handler.clearHandler(); //deletes all active enemies
+                    HUD.HEALTH = 100; //resets health after the game
+		        } }
 		collision();
 
 	}
