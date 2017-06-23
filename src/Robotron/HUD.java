@@ -37,10 +37,15 @@ public class HUD {
     public int getScore(){
         return score;
     }
-    public int getLevel(){
+
+    public int getLevel()
+    {
+
         return level;
     }
-    public void setLevel(int level){
+
+    public void setLevel(int level)
+    {
         this.level = level;
     }
 }

@@ -26,16 +26,10 @@ public class Menu extends MouseAdapter {
 			if (mouseOver(mx, my, 515, 350, 250, 90)) {
 				game.GameState = State.Game;
 				handler.addObject(new Player(game.WIDTH/2-32,game.HEIGHT/2-32, ID.Player, handler, game));
-       	 		handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
-        		handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
+				handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
+				handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
 				handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
-				handler.addObject(new MineEnemy(500,550,ID.MineEnemy, handler));
-				handler.addObject(new MineEnemy(120,480,ID.MineEnemy, handler));
-				handler.addObject(new MineEnemy(420,80,ID.MineEnemy, handler));
-
-				handler.addObject(new HealingEnemy(300,300,ID.HealingEnemy,handler));
-				handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy,handler));
-
+				handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy, handler));
 			}
 			if (mouseOver(mx, my, 515, 600, 250, 90)) {
 				System.exit(1);

@@ -12,6 +12,7 @@ public class Projectile extends GameObject {
     private Handler handler;
     private float velX;
     private float velY;
+    Spawn p;
 
     public Projectile(float x, float y, ID id, Handler handler, float velX, float velY) {
         super(x, y, id);
@@ -48,6 +49,11 @@ public class Projectile extends GameObject {
                     if (tempObject.Health == 2) {
                         System.out.println("enemy has been damaged 3 times!");
                         handler.removeObject(tempObject);
+                        p.scoreKeep += 50;
+                        System.out.println("ScoreKeep" + p.scoreKeep);
+
+
+
 
                     } else {
                         tempObject.Health += 1;
@@ -60,6 +66,7 @@ public class Projectile extends GameObject {
                     if (tempObject.Health == 0) {
                         System.out.println("Mine has been destroyed!");
                         handler.removeObject(tempObject);
+                        p.scoreKeep += 10;
 
                     } else {
                         tempObject.Health = 0;
@@ -82,8 +89,10 @@ public class Projectile extends GameObject {
                 else if (tempObject.getId() == ID.SmartEnemy) {
                     if (getBounds().intersects(tempObject.getBounds())) {
                         if (tempObject.Health == 4) {
-                            System.out.println("enemy has been damaged 3 times!");
+                            System.out.println("enemy has been damaged 4 times!");
                             handler.removeObject(tempObject);
+                            p.scoreKeep += 60;
+                            System.out.println("Scorekeep" + p.scoreKeep);
                         }
                         else {
                             tempObject.Health += 1;

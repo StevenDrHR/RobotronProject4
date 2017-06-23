@@ -26,6 +26,7 @@ public class Game extends Canvas implements Runnable{
     private Player p;
     public BasicEnemy be;
     public SmartEnemy sm;
+    private Spawn spawn;
     // hello
     private Menu menu;
 
@@ -45,7 +46,7 @@ public class Game extends Canvas implements Runnable{
         keyInput = new KeyInput(handler);
         this.addKeyListener(keyInput);
 
-
+        spawn = new Spawn(handler,hud);
         new window(WIDTH, HEIGHT,"Robotron", this);
         r = new Random();
 
@@ -113,10 +114,7 @@ public class Game extends Canvas implements Runnable{
         handler.tick();
         if (GameState == State.Game) {
             hud.tick();
-           // if(hud.HEALTH <= 0){
-               // hud.HEALTH = 100;
-               // handler.clearHandler();
-               // GameState = State.End;
+            spawn.tick();
 
         }  if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.tick();
