@@ -7,13 +7,13 @@ import static java.awt.Color.WHITE;
 
 public class HUD {
 
-    public static int HEALTH = 10000;
+    public static int HEALTH = 100;
 
     private int score = 0;
     private int level = 1;
 
     public void tick(){
-        HEALTH = (int) Game.clamp(HEALTH,0,10000);
+        HEALTH = (int) Game.clamp(HEALTH,0,100);
 
     }
 

@@ -23,7 +23,7 @@ public class MineEnemy extends GameObject {
         velY = 0;
         try {
             // Grab the InputStream for the image.
-            img = ImageIO.read(new FileInputStream("enemyrobot.png"));
+            img = ImageIO.read(new FileInputStream("mine.png"));
 
         } catch (IOException e) {
             System.out.println("The image was not loaded.");
