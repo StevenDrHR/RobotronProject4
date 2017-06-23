@@ -10,10 +10,12 @@ public class Spawn
         public static int scoreKeep = 0;
         private int delay = 0;
         private int levelspawner = 1;
+        private Game game;
 
-        public Spawn (Handler handler, HUD hud){
+        public Spawn (Handler handler, HUD hud, Game game){
             this.handler = handler;
             this.hud = hud;
+            this.game = game;
         }
         public void tick(){
             delay++;
@@ -74,7 +76,10 @@ public class Spawn
                 delay = 0;
                 hud.setLevel(hud.getLevel() + 1);
                 levelspawner += 5;
-                System.out.println("levelspawner" + levelspawner);}
+                System.out.println("levelspawner" + levelspawner);
+                game.GameState = Game.State.End;
+                handler.clearHandler();
+                HUD.HEALTH = 100;}
 
 
             }

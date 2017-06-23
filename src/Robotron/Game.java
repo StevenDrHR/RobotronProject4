@@ -46,7 +46,7 @@ public class Game extends Canvas implements Runnable{
         keyInput = new KeyInput(handler);
         this.addKeyListener(keyInput);
 
-        spawn = new Spawn(handler,hud);
+        spawn = new Spawn(handler,hud,this);
         new window(WIDTH, HEIGHT,"Robotron", this);
         r = new Random();
 

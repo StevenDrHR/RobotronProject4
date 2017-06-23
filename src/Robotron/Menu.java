@@ -104,7 +104,7 @@ public class Menu extends MouseAdapter {
 			g.drawString("GAME OVER", 320, 110);
 
 			g.setFont(fnt2);
-			g.drawString("Your score is: " + hud.getScore(), 400, 400);
+			g.drawString("Your score is: " + Spawn.scoreKeep, 400, 400);
 			g.drawRect(395, 600, 460, 90);
 			g.drawString("Go to menu", 460, 665);
 		}
