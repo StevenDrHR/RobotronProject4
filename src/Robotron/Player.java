@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.*;
-
+import Robotron.Game.State;
 /**
  * Created by Steven on 23-4-2016.
  */
@@ -39,46 +39,53 @@ public class Player extends GameObject {
 
 	@Override
 	public void tick() {
-		x += velX;
-		y += velY;
-		// -1 links facing 1 rechts facing
-		// -1 onder 1 boven
-		if (velX < 0 && velY < 0) {
-			GoingUP = -1;
-			facing = -1;
-		} // linksonder
-		else if (velX > 0 && velY < 0) {
-			GoingUP = -1;
-			facing = 1;
-		} // rechtsonder
-		else if (velX < 0 && velY > 0) {
-			GoingUP = 1;
-			facing = -1;
-		} // linksboven
-		else if (velX > 0 && velY > 0) {
-			GoingUP = 1;
-			facing = 1;
-		} // rechtsboven
-		else if (velX == 0 && velY > 0) {
-			GoingUP = 1;
-			facing = 0;
-		} // boven
-		else if (velX == 0 && velY < 0) {
-			GoingUP = -1;
-			facing = 0;
-		} // onder
-		else if (velX < 0 && velY == 0) {
-			GoingUP = 0;
-			facing = -1;
-		} // links
-		else if (velX > 0 && velY == 0) {
-			GoingUP = 0;
-			facing = 1;
-		} // rechts
+		if (HUD.HEALTH > 0) { //checks if the player is alive
+            x += velX;
+            y += velY;
+            // -1 links facing 1 rechts facing
+            // -1 onder 1 boven
+            if (velX < 0 && velY < 0) {
+                GoingUP = -1;
+                facing = -1;
+            } // linksonder
+            else if (velX > 0 && velY < 0) {
+                GoingUP = -1;
+                facing = 1;
+            } // rechtsonder
+            else if (velX < 0 && velY > 0) {
+                GoingUP = 1;
+                facing = -1;
+            } // linksboven
+            else if (velX > 0 && velY > 0) {
+                GoingUP = 1;
+                facing = 1;
+            } // rechtsboven
+            else if (velX == 0 && velY > 0) {
+                GoingUP = 1;
+                facing = 0;
+            } // boven
+            else if (velX == 0 && velY < 0) {
+                GoingUP = -1;
+                facing = 0;
+            } // onder
+            else if (velX < 0 && velY == 0) {
+                GoingUP = 0;
+                facing = -1;
+            } // links
+            else if (velX > 0 && velY == 0) {
+                GoingUP = 0;
+                facing = 1;
+            } // rechts
 
-		x = Game.clamp(x, 0, Game.WIDTH - 38);
-		y = Game.clamp(y, 0, Game.HEIGHT - 60);
-
+            x = Game.clamp(x, 0, Game.WIDTH - 38);
+            y = Game.clamp(y, 0, Game.HEIGHT - 60);
+        }
+        else {
+               GoingUP = 1;
+               facing = 0;
+               velY = 50; // how fast the player goes down
+                y += velY; // drops the player down
+		        if (y >= 1050){} }  // needs to be filled in with the end game gamestate
 		collision();
 
 	}

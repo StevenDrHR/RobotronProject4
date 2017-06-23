@@ -31,25 +31,27 @@ public class HealingEnemy extends GameObject {
 
 	@Override
 	public void tick() {
-		x += velX;
-		y += velY;
-		time++;
-		timeY++;
-		if (time > 200 + (Math.random() * (4000 - 200))) {
-			velX *= -1;
-			time = 0;
-		}
+		if(HUD.HEALTH > 0) {//checks if the player is alive
+            x += velX;
+            y += velY;
+            time++;
+            timeY++;
+            if (time > 200 + (Math.random() * (4000 - 200))) {
+                velX *= -1;
+                time = 0;
+            }
 
-		if (timeY > 200 + (Math.random() * (4000 - 200))) {
-			velY *= -1;
-			timeY = 0;
-		}
+            if (timeY > 200 + (Math.random() * (4000 - 200))) {
+                velY *= -1;
+                timeY = 0;
+            }
 
-		if (y <= 0 || y >= Game.HEIGHT - 80)
-			velY *= -1;
-		if (x <= 0 || x >= Game.WIDTH - 52)
-			velX *= -1;
-
+            if (y <= 0 || y >= Game.HEIGHT - 80)
+                velY *= -1;
+            if (x <= 0 || x >= Game.WIDTH - 52)
+                velX *= -1;
+        }
+        else {}//if the player is dead do nothing
 		collision();
 	}
 
