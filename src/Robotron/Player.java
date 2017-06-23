@@ -85,7 +85,7 @@ public class Player extends GameObject {
                facing = 0;
                velY = 50; // how fast the player goes down
                 y += velY; // drops the player down
-		        if (y >= 1050){} }  // needs to be filled in with the end game gamestate
+		        if (y >= 1050){} }  // needs to be filled in with the end gamestate
 		collision();
 
 	}
