@@ -12,6 +12,7 @@ public class Menu extends MouseAdapter {
 	private Game game;
 	private Handler handler;
 	private HUD hud;
+	Spawn p;
 
 	public Menu(Game game, Handler handler, HUD hud) {
 		this.game = game;
@@ -24,6 +25,7 @@ public class Menu extends MouseAdapter {
 		int my = e.getY();
 		if (game.GameState == State.Menu) {
 			if (mouseOver(mx, my, 515, 350, 250, 90)) {
+
 				game.GameState = State.Game;
 				handler.addObject(new Player(game.WIDTH/2-32,game.HEIGHT/2-32, ID.Player, handler, game));
 				handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
@@ -49,6 +51,8 @@ public class Menu extends MouseAdapter {
 		if(game.GameState==State.End){
 			if(mouseOver(mx,my,395,600,460,90)){
 				game.GameState = State.Menu;
+				p.scoreKeep = 0;
+				hud.level = 1;
 				return;
 			}
 		}

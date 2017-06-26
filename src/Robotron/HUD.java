@@ -10,10 +10,12 @@ public class HUD {
     public static int HEALTH = 100;
 
     private int score = 0;
-    private int level = 1;
+    public int level = 1;
+    Spawn p;
 
     public void tick(){
         HEALTH = (int) Game.clamp(HEALTH,0,100);
+
 
     }
 
@@ -26,8 +28,10 @@ public class HUD {
         g.setColor(Color.white);
         g.drawRect(player.x,player.y,player.width,player.height);
 
+
         g.drawString("Level: " + level,15,86);
         g.drawString("Health: " + HEALTH, 15, 108);
+        g.drawString("Score: " + p.scoreKeep,15,130);
 
     }
 
