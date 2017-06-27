@@ -9,7 +9,7 @@ public class Spawn
         private HUD hud;
         public static int scoreKeep = 0;
         private int delay = 0;
-        private int levelspawner = 1;
+        private int levelspawner = 0;
         private Game game;
 
         public Spawn (Handler handler, HUD hud, Game game){
@@ -23,7 +23,7 @@ public class Spawn
                 scoreKeep += 10;
                 delay = 0;
                 hud.setLevel(hud.getLevel() + 1);
-                levelspawner += 1;
+                levelspawner += 2;
                 System.out.println("levelspawner" + levelspawner);}
                 if (levelspawner == 2 && delay >= 300) {
                     handler.addObject(new BasicEnemy(100, 100, ID.BasicEnemy, handler));
