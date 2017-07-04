@@ -133,6 +133,11 @@ public class Game extends Canvas implements Runnable{
         handler.render(g);
         if (GameState == State.Game) {
             hud.render(g);
+            if(spawn.levelup){
+                Font fnt = new Font("arial", 1, 100);
+                g.setFont(fnt);
+                g.drawString("Level up",400,300);
+            }
         } else if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.render(g);
         }
