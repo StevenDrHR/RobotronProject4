@@ -14,6 +14,7 @@ import static javafx.application.Platform.exit;
 
 
 public class Game extends Canvas implements Runnable{
+    private static Game _instance = null;
 
     public static final long serialVersionUID = -23456;
     public static final int WIDTH = 1280, HEIGHT = WIDTH / 12 * 9;
@@ -27,7 +28,7 @@ public class Game extends Canvas implements Runnable{
     public BasicEnemy be;
     public SmartEnemy sm;
     private Spawn spawn;
-    // hello
+    // helloen l
     private Menu menu;
 
     // Allows the program to differentiate in where it is
@@ -37,7 +38,7 @@ public class Game extends Canvas implements Runnable{
 
     public State GameState = State.Menu;
 
-    public Game(){
+    private Game(){
         hud = new HUD();
         handler = new Handler();
         menu = new Menu(this, handler, hud);
@@ -63,8 +64,13 @@ public class Game extends Canvas implements Runnable{
 
 
     }
-
-
+    private synchronized static void createInstance () {
+        if (_instance == null) _instance = new Game();
+    }
+    public static Game getInstance () {
+        if (_instance == null) createInstance ();
+        return _instance;
+    }
 
     public synchronized void start(){
         thread = new Thread(this);
