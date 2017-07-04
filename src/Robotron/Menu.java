@@ -125,7 +125,7 @@ public class Menu extends MouseAdapter {
 			g.setFont(fnt);
 			g.setColor(Color.white);
 			g.drawString("Help", 510, 110);
-
+			//comment
 			g.setFont(fnt2);
 			g.drawImage(img1,250,200,138,91,null);
 			g.drawImage(img2,650,200,138,91,null);
