@@ -1,31 +1,35 @@
 package Robotron;
 
-import com.sun.javafx.scene.traversal.Direction;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Random;
 import java.awt.*;
 import Robotron.Game.State;
 /**
- * Created by Steven on 23-4-2016.
+ * Player class which extends GameObject and has all the additional implementation
+ * for the methods that are needed to have it interact with other GameObjects.
  */
 public class Player extends GameObject {
 	Handler handler;
 	Game game;
 	private BufferedImage img;
 
-	public Player(int x, int y, ID id, Handler handler, Game game) {
+    /**
+     * Instantiate a new instance of player.
+     *
+     * @param x       X coordinate of the class
+     * @param y       Y coordinate of the class
+     * @param id      Type of GameObject
+     * @param handler Instance of Handler class which loops through all GameObjects
+     * @param game    Instance of Game class used to change the GameState if the player dies
+     */
+    public Player(int x, int y, ID id, Handler handler, Game game) {
 		super(x, y, id);
 		this.handler = handler;
 		this.game = game;
 		try {
-			// Grab the InputStream for the image.
 			img = ImageIO.read(new FileInputStream("robot.png"));
 
 		} catch (IOException e) {
@@ -34,50 +38,54 @@ public class Player extends GameObject {
 		}
 
 	}
-
+    /**
+     * Creates a hitbox that allows the program to check when it gets touched by other objects
+     *
+     * @return Returns a Rectangle at the position of the object that's also the size of the object
+     */
 	public Rectangle getBounds() {
 		return new Rectangle((int)x, (int)y, 32, 32);
 	}
-
+    /**
+     * Method which updates all the data of the class
+     */
 	@Override
 	public void tick() {
-		if (HUD.HEALTH > 0) { //checks if the player is alive
+		if (HUD.HEALTH > 0) {
             x += velX;
             y += velY;
-            // -1 links facing 1 rechts facing
-            // -1 onder 1 boven
             if (velX < 0 && velY < 0) {
                 GoingUP = -1;
                 facing = -1;
-            } // linksonder
+            }
             else if (velX > 0 && velY < 0) {
                 GoingUP = -1;
                 facing = 1;
-            } // rechtsonder
+            }
             else if (velX < 0 && velY > 0) {
                 GoingUP = 1;
                 facing = -1;
-            } // linksboven
+            }
             else if (velX > 0 && velY > 0) {
                 GoingUP = 1;
                 facing = 1;
-            } // rechtsboven
+            }
             else if (velX == 0 && velY > 0) {
                 GoingUP = 1;
                 facing = 0;
-            } // boven
+            }
             else if (velX == 0 && velY < 0) {
                 GoingUP = -1;
                 facing = 0;
-            } // onder
+            }
             else if (velX < 0 && velY == 0) {
                 GoingUP = 0;
                 facing = -1;
-            } // links
+            }
             else if (velX > 0 && velY == 0) {
                 GoingUP = 0;
                 facing = 1;
-            } // rechts
+            }
 
             x = Game.clamp(x, 0, Game.WIDTH - 38);
             y = Game.clamp(y, 0, Game.HEIGHT - 60);
@@ -85,17 +93,19 @@ public class Player extends GameObject {
         else {
                GoingUP = 1;
                facing = 0;
-               velY = 50; // how fast the player goes down
-                y += velY; // drops the player down
-		        if (y >= 2050){  //checks position of the player
-		            game.GameState = State.End; //sets gamestate to end screen
-                    handler.clearHandler(); //deletes all active enemies
-                    HUD.HEALTH = 100; //resets health after the game
+               velY = 50;
+               y += velY;
+		       if (y >= 2050){
+                    game.GameState = State.End;
+                    handler.clearHandler();
+                    HUD.HEALTH = 100;
 		        } }
 		collision();
 
 	}
-
+    /**
+     * Uses the getBounds method to check if the object is being touched by other GameObjects
+     */
 	private void collision() {
 		for (int i = 0; i < handler.object.size(); i++) {
 
@@ -110,18 +120,6 @@ public class Player extends GameObject {
                     HUD.HEALTH -= 100;
                 }
             }
-//            else if (tempObject.getId() == ID.BasicHealth) {
-//                if (getBounds().intersects(tempObject.getBounds())) {
-//                    HUD.HEALTH += 2;
-//                    handler.removeObject(tempObject);
-//                }
-//            }
-//            else if (tempObject.getId() == ID.FastEnemy) {
-//                if (getBounds().intersects(tempObject.getBounds())) {
-//                    HUD.HEALTH -= 3;
-//                }
-//            }
-
 			if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.HealingEnemy) {
 				if (getBounds().intersects(tempObject.getBounds())) {
 					HUD.HEALTH -= 2;
@@ -135,8 +133,12 @@ public class Player extends GameObject {
 
 
 		}
-	}// collision codeollision code
-
+	}
+    /**
+     * Draws the image of the class on the given instance of Graphics
+     *
+     * @param g Instance of Graphics originating from the Game class
+     */
 	@Override
 	public void render(Graphics g) {
 		if (id == ID.Player)

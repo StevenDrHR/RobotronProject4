@@ -5,35 +5,53 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Random;
 
+/**
+ * BasicEnemy class which extends GameObject and has all the additional implementation
+ * for the methods that are needed to have it interact with other GameObjects.
+ */
 public class BasicEnemy extends GameObject {
-	private Handler handler;
-	private BufferedImage img;
-	public int time = 0;
-	public int timeY = 0;
+    private Handler handler;
+    private BufferedImage img;
+    public int time = 0;
+    public int timeY = 0;
 
-	public BasicEnemy(int x, int y, ID id, Handler handler) {
-		super(x, y, id);
-		this.handler = handler;
-		velX = 4;
-		velY = 4;
-		try {
-			// Grab the InputStream for the image.
-			img = ImageIO.read(new FileInputStream("enemyrobot.png"));
+    /**
+     * instantiate a new instance of BasicEnemy
+     *
+     * @param x       X coordinate of the class
+     * @param y       Y coordinate of the class
+     * @param id      Type of GameObject
+     * @param handler Instance of Handler class which loops through all GameObjects
+     */
+    public BasicEnemy(int x, int y, ID id, Handler handler) {
+        super(x, y, id);
+        this.handler = handler;
+        velX = 4;
+        velY = 4;
+        try {
+            img = ImageIO.read(new FileInputStream("enemyrobot.png"));
 
-		} catch (IOException e) {
-			System.out.println("The image was not loaded.");
+        } catch (IOException e) {
+            System.out.println("The image was not loaded.");
 
-		}
-	}
+        }
+    }
 
-	public Rectangle getBounds() {
-		return new Rectangle((int)x,(int) y, 52, 52);
-	}
+    /**
+     * Creates a hitbox that allows the program to check when it gets touched by other objects
+     *
+     * @return Returns a Rectangle at the position of the object that's also the size of the object
+     */
+    public Rectangle getBounds() {
+        return new Rectangle((int) x, (int) y, 52, 52);
+    }
 
-	public void tick() {
-        if (HUD.HEALTH > 0){//checks if the player is alive
+    /**
+     * Method which updates all the data of the class
+     */
+    public void tick() {
+        if (HUD.HEALTH > 0) {
             x += velX;
             y += velY;
             time++;
@@ -51,29 +69,38 @@ public class BasicEnemy extends GameObject {
             if (y <= 0 || y >= Game.HEIGHT - 80)
                 velY *= -1;
             if (x <= 0 || x >= Game.WIDTH - 52)
-                velX *= -1;}
-        else {}//if the player is dead do nothing
+                velX *= -1;
+        } else {
+        }
         collision();
 
     }
 
-	public void render(Graphics g) {
-		g.drawImage(img, (int)x,(int) y, 52, 52, null);
-	}
+    /**
+     * Draws the image of the class on the given instance of Graphics
+     *
+     * @param g Instance of Graphics originating from the Game class
+     */
+    public void render(Graphics g) {
+        g.drawImage(img, (int) x, (int) y, 52, 52, null);
+    }
 
-	private void collision() {
-		for (int i = 0; i < handler.object.size(); i++) {
+    /**
+     * Uses the getBounds method to check if the object is being touched by other GameObjects
+     */
+    private void collision() {
+        for (int i = 0; i < handler.object.size(); i++) {
 
-			GameObject tempObject = handler.object.get(i);
-			if (tempObject.getId() == ID.Projectile) {
-				if (getBounds().intersects(tempObject.getBounds())) {
-					handler.removeObject(tempObject);
+            GameObject tempObject = handler.object.get(i);
+            if (tempObject.getId() == ID.Projectile) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    handler.removeObject(tempObject);
 
-				}
+                }
 
-			}
+            }
 
-		}
+        }
 
-	}
+    }
 }

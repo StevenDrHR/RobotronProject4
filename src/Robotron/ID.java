@@ -1,7 +1,7 @@
 package Robotron;
 
 /**
- * Created by Steven on 16-Jun-17.
+ * Enum class which allows the program to differentiate between different types of GameObject
  */
 public enum ID {
     Player(),

@@ -4,16 +4,11 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.util.Random;
-
-//import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
-import static javafx.application.Platform.exit;
-
-
-public class Game extends Canvas implements Runnable{
+/**
+ * Game method that extends canvas and implements runnable.
+ * The main method from which all other methods are called.
+ */
+public class Game extends Canvas implements Runnable {
     private static Game _instance = null;
 
     public static final long serialVersionUID = -23456;
@@ -24,21 +19,22 @@ public class Game extends Canvas implements Runnable{
     private Handler handler;
     private HUD hud;
     private KeyInput keyInput;
-    private Player p;
-    public BasicEnemy be;
-    public SmartEnemy sm;
     private Spawn spawn;
-    // helloen l
     private Menu menu;
 
-    // Allows the program to differentiate in where it is
+    /**
+     * Additional enum to allow the game to differentiate which state it is in
+     */
     public enum State {
-        Menu, Help, Game,End,
-    };
+        Menu, Help, Game, End,
+    }
 
     public State GameState = State.Menu;
 
-    private Game(){
+    /**
+     * Creates our main method used to run the game and instantiates everything that is needed to run it.
+     */
+    private Game() {
         hud = new HUD();
         handler = new Handler();
         menu = new Menu(this, handler, hud);
@@ -47,54 +43,63 @@ public class Game extends Canvas implements Runnable{
         keyInput = new KeyInput(handler);
         this.addKeyListener(keyInput);
 
-        spawn = new Spawn(handler,hud,this);
-        new window(WIDTH, HEIGHT,"Robotron", this);
+        spawn = new Spawn(handler, hud, this);
+        new window(WIDTH, HEIGHT, "Robotron", this);
         r = new Random();
-
-//        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player, handler));
-//        handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
-//        handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
-//        handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
-//        handler.addObject(new MineEnemy(500,550,ID.MineEnemy, handler));
-//        handler.addObject(new MineEnemy(120,480,ID.MineEnemy, handler));
-//        handler.addObject(new MineEnemy(420,80,ID.MineEnemy, handler));
-//
-//        handler.addObject(new HealingEnemy(300,300,ID.HealingEnemy,handler));
-//        handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy,handler));
-
-
     }
-    private synchronized static void createInstance () {
-        if (_instance == null) _instance = new Game();
+
+    /**
+     * create a private singleton instance of game
+     */
+    private synchronized static void createInstance() {
+        if (_instance == null)
+            _instance = new Game();
     }
-    public static Game getInstance () {
-        if (_instance == null) createInstance ();
+
+    /**
+     * method that returns a singleton instance of game
+     *
+     * @return
+     */
+    public static Game getInstance() {
+        if (_instance == null)
+            createInstance();
         return _instance;
     }
 
-    public synchronized void start(){
+    /**
+     * starts a new thread for the game and sets running to true which allows run to loop
+     */
+    public synchronized void start() {
         thread = new Thread(this);
         thread.start();
-        running = true;     //Thread on
+        running = true;
 
     }
-    public synchronized void stop(){
-        try{
+
+    /**
+     * stop the thread and set running to false to end the program
+     */
+    public synchronized void stop() {
+        try {
             thread.join();
-            running = false; //thread not on kill the thread
-        }catch (Exception e) {
-            e.printStackTrace();//tell us why it couldnt do it
+            running = false;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-    public void run(){
+
+    /**
+     * Runs through all the methods needed to execute the program
+     */
+    public void run() {
         this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer = System.currentTimeMillis();
-        int frames = 0;
-        while (running){
+        while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -104,45 +109,51 @@ public class Game extends Canvas implements Runnable{
             }
             if (running)
                 render();
-            frames++;
 
-            if (System.currentTimeMillis() - timer > 1000){
+            if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                //System.out.println("fps = " + frames);
-                frames = 0;
             }
 
         }
         stop();
 
     }
-    private void tick(){
+
+    /**
+     * Method that calls the needed tick methods depending on what the state of the program is
+     */
+    private void tick() {
         handler.tick();
         if (GameState == State.Game) {
             hud.tick();
             spawn.tick();
 
-        }  if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
+        }
+        if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.tick();
         }
 
     }
-    private void render(){
+
+    /**
+     * Creates an instance of Graphics upon which all the render methods are called
+     */
+    private void render() {
         BufferStrategy bs = this.getBufferStrategy();
-        if (bs == null){
+        if (bs == null) {
             this.createBufferStrategy(3);
             return;
         }
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
-        g.fillRect(0,0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
         if (GameState == State.Game) {
             hud.render(g);
-            if(spawn.levelup){
+            if (spawn.levelup) {
                 Font fnt = new Font("arial", 1, 100);
                 g.setFont(fnt);
-                g.drawString("Level up",400,300);
+                g.drawString("Level up", 400, 300);
             }
         } else if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.render(g);
@@ -150,7 +161,16 @@ public class Game extends Canvas implements Runnable{
         g.dispose();
         bs.show();
     }
-    public static float clamp(float var, float min, float max){
+
+    /**
+     * Method that helps to stop the characters from leaving the screen
+     *
+     * @param var the value of the character that needs to be checked
+     * @param min the minimum value
+     * @param max the maximum value
+     * @return returns a value thats within the given min and max
+     */
+    public static float clamp(float var, float min, float max) {
         if (var >= max)
             return var = max;
         else if (var <= min)
@@ -159,7 +179,12 @@ public class Game extends Canvas implements Runnable{
             return var;
     }
 
-    public static void  main(String args[]){
+    /**
+     * main method that instantiates our game class
+     *
+     * @param args
+     */
+    public static void main(String args[]) {
         new Game();
     }
 

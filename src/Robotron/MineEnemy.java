@@ -5,16 +5,24 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Random;
+
 /**
- * Created by Robin on 6/22/2017.
+ * MineEnemy class which extends GameObject and has all the additional implementation
+ * for the methods that are needed to have it interact with other GameObjects.
  */
+
 public class MineEnemy extends GameObject {
     private Handler handler;
     private BufferedImage img;
-    private Random r;
-    public int time = 0;
-    public int timeY = 0;
+
+    /**
+     * Instantiate a new instance of MineEnemy.
+     *
+     * @param x       X coordinate of the class
+     * @param y       Y coordinate of the class
+     * @param id      Type of GameObject
+     * @param handler Instance of Handler class which loops through all GameObjects
+     */
     public MineEnemy(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
@@ -22,7 +30,6 @@ public class MineEnemy extends GameObject {
         velX = 0;
         velY = 0;
         try {
-            // Grab the InputStream for the image.
             img = ImageIO.read(new FileInputStream("mine.png"));
 
         } catch (IOException e) {
@@ -30,21 +37,39 @@ public class MineEnemy extends GameObject {
 
         }
     }
+
+    /**
+     * Creates a hitbox that allows the program to check when it gets touched by other objects
+     *
+     * @return Returns a Rectangle at the position of the object that's also the size of the object
+     */
     public Rectangle getBounds() {
-        return new Rectangle((int)x, (int)y, 52, 52);
+        return new Rectangle((int) x, (int) y, 52, 52);
     }
 
+    /**
+     * Method which updates all the data of the class
+     */
     public void tick() {
         collision();
 
 
     }
 
+    /**
+     * Draws the image of the class on the given instance of Graphics
+     *
+     * @param g Instance of Graphics originating from the Game class
+     */
     public void render(Graphics g) {
         g.setColor(Color.BLUE);
-        g.drawImage(img,(int)x,(int)y,52,52,null);
+        g.drawImage(img, (int) x, (int) y, 52, 52, null);
     }
-    private void collision(){
+
+    /**
+     * Uses the getBounds method to check if the object is being touched by other GameObjects
+     */
+    private void collision() {
         for (int i = 0; i < handler.object.size(); i++) {
 
             GameObject tempObject = handler.object.get(i);
