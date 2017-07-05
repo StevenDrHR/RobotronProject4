@@ -7,6 +7,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.awt.*;
 import Robotron.Game.State;
+
+import static Robotron.Spawn.bosslevel;
+
 /**
  * Player class which extends GameObject and has all the additional implementation
  * for the methods that are needed to have it interact with other GameObjects.
@@ -88,7 +91,7 @@ public class Player extends GameObject {
             }
 
             x = Game.clamp(x, 0, Game.WIDTH - 38);
-            y = Game.clamp(y, 0, Game.HEIGHT - 60);
+            y = Game.clamp(y, 0, Game.HEIGHT - 65);
         }
         else {
                GoingUP = 1;
@@ -96,6 +99,7 @@ public class Player extends GameObject {
                velY = 50;
                y += velY;
 		       if (y >= 2050){
+                    bosslevel = 1;
                     game.GameState = State.End;
                     handler.clearHandler();
                     HUD.HEALTH = 100;

@@ -1,5 +1,7 @@
 package Robotron;
 
+import java.util.Random;
+
 /**
  * Spawn class which is used to spawn new enemies when all of them are dead and differentiate between levels
  */
@@ -12,6 +14,8 @@ public class Spawn {
     private Game game;
     public static int bosslevel = 1;
     public boolean levelup;
+    private Random r;
+
 
 
 
@@ -34,7 +38,7 @@ public class Spawn {
      */
     public void tick() {
         delay++;
-        System.out.println("Delay" + delay);
+        r = new Random();
         if (scoreKeep == 210) {
             levelup = true;
             scoreKeep += 10;
@@ -108,15 +112,17 @@ public class Spawn {
         }
         if (bosslevel == 2) {
             if (delay >= 300 + (Math.random() * (4000 - 200))){
-                handler.addObject(new BasicEnemy(100, 100, ID.BasicEnemy, handler));
-                handler.addObject(new SmartEnemy(700, 100, ID.SmartEnemy, handler));
-                handler.addObject(new SmartEnemy(700, 100, ID.SmartEnemy, handler));
+                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH),r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
+                handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH),r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));
+                handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH),r.nextInt(Game.HEIGHT), ID.SmartEnemy, handler));
                 delay = 0;}
         }
         if (bosslevel == 3){
-            game.GameState = Game.State.End; //sets gamestate to end screen
+            bosslevel = 1;
             handler.clearHandler(); //deletes all active enemies
             HUD.HEALTH = 100; //resets health after the game
+            game.GameState = Game.State.End; //sets gamestate to end screen
+
         }
     }
 }

@@ -31,7 +31,7 @@ public class EndBoss extends GameObject {
     @Override
     public void tick() {
         y += velY;
-        if (y <= 0 || y >= Game.HEIGHT - 80)
+        if (y <= 0 || y >= Game.HEIGHT - 180)
             velY *= -1;
         collision();
     }
