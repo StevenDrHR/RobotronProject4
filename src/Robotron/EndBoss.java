@@ -38,12 +38,12 @@ public class EndBoss extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(img, (int)x,(int) y, 120, 160, null);
+        g.drawImage(img, (int)x,(int) y, 140, 180, null);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int)x,(int) y, 120, 160);
+        return new Rectangle((int)x,(int) y, 140, 180);
     }
 
     private void collision() {
