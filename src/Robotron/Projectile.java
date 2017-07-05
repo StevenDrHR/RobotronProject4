@@ -95,24 +95,44 @@ public class Projectile extends GameObject {
 				}
 			}
 
-                else if (tempObject.getId() == ID.SmartEnemy) {
-                    if (getBounds().intersects(tempObject.getBounds())) {
-                        if (tempObject.Health == 4) {
-                            System.out.println("enemy has been damaged 4 times!");
-                            handler.removeObject(tempObject);
-                            p.scoreKeep += 60;
-                            System.out.println("Scorekeep" + p.scoreKeep);
-                        }
-                        else {
-                            tempObject.Health += 1;
-                            System.out.println(" Enemy has been Damaged");
-                        }
-
-
+            else if (tempObject.getId() == ID.SmartEnemy) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    if (tempObject.Health == 4) {
+                        System.out.println("enemy has been damaged 4 times!");
+                        handler.removeObject(tempObject);
+                        p.scoreKeep += 60;
+                        System.out.println("Scorekeep" + p.scoreKeep);
+                    }
+                    else {
+                        tempObject.Health += 1;
+                        System.out.println(" Enemy has been Damaged");
                     }
 
+
                 }
+
             }
+            else if (tempObject.getId() == ID.EndBoss) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    if (tempObject.Health == 80) {
+                        System.out.println("enemy has been damaged ennoug htimes!");
+                        handler.removeObject(tempObject);
+                        p.scoreKeep += 500;
+                        p.bosslevel = 3;
+                    }
+                    else {
+                        tempObject.Health += 1;
+                        System.out.println(" Boss has been Damaged wubbadub");
+                    }
+
+
+                }
+
+            }
+
         }
+
     }
+}
+
 

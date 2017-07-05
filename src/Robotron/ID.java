@@ -10,4 +10,5 @@ public enum ID {
     MineEnemy(),
     HealingEnemy(),
     SmartEnemy(),
+    EndBoss(),
 }

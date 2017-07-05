@@ -7,10 +7,13 @@ public class Spawn {
     private Handler handler;
     private HUD hud;
     public static int scoreKeep = 0;
-    private int delay = 0;
+    public int delay = 0;
     private int levelspawner = 0;
     private Game game;
+    public static int bosslevel = 1;
     public boolean levelup;
+
+
 
     /**
      * Method which creates an instance of Spawn
@@ -31,6 +34,7 @@ public class Spawn {
      */
     public void tick() {
         delay++;
+        System.out.println("Delay" + delay);
         if (scoreKeep == 210) {
             levelup = true;
             scoreKeep += 10;
@@ -86,20 +90,41 @@ public class Spawn {
             delay = 0;
             levelspawner = 0;
         } else if (scoreKeep == 1000) {
+            levelup = true;
             scoreKeep += 10;
+
             delay = 0;
             hud.setLevel(hud.getLevel() + 1);
             levelspawner += 5;
-            System.out.println("levelspawner" + levelspawner);
-            game.GameState = Game.State.End;
-            handler.clearHandler();
-            HUD.HEALTH = 100;
+            System.out.println("levelspawner boss" + levelspawner);
         }
-
-
+        if (levelspawner == 5 && delay >= 300) {
+            levelup = false;
+            handler.addObject(new EndBoss(800, 750, ID.EndBoss, handler));
+            bosslevel += 1;
+            levelspawner = 0;
+            delay = 0;
+            System.out.println("bosslevel" + bosslevel);
+        }
+        if (bosslevel == 2) {
+            if (delay >= 300 + (Math.random() * (4000 - 200))){
+                handler.addObject(new BasicEnemy(100, 100, ID.BasicEnemy, handler));
+                handler.addObject(new SmartEnemy(700, 100, ID.SmartEnemy, handler));
+                handler.addObject(new SmartEnemy(700, 100, ID.SmartEnemy, handler));
+                delay = 0;}
+        }
+        if (bosslevel == 3){
+            game.GameState = Game.State.End; //sets gamestate to end screen
+            handler.clearHandler(); //deletes all active enemies
+            HUD.HEALTH = 100; //resets health after the game
+        }
     }
-
-
 }
+
+
+
+
+
+
 
 
