@@ -113,6 +113,7 @@ public class Player extends GameObject {
             if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.HealingEnemy) {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     HUD.HEALTH -= 2;
+
                 }
             }
             if (tempObject.getId() == ID.MineEnemy) {
