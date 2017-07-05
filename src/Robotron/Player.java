@@ -131,6 +131,11 @@ public class Player extends GameObject {
 					HUD.HEALTH -= 4;
 				}
 			}
+            if (tempObject.getId() == ID.EndBoss) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    HUD.HEALTH -= 99;
+                }
+            }
 
 
 		}
