@@ -1,8 +1,10 @@
 package Robotron;
 
+import Robotron.mediaplayer.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +32,7 @@ public class Game extends Canvas implements Runnable{
     private Spawn spawn;
     // helloen l
     private Menu menu;
-
+    //private AudioPlayer audioPlayer;
     // Allows the program to differentiate in where it is
     public enum State {
         Menu, Help, Game,End,
@@ -50,6 +52,9 @@ public class Game extends Canvas implements Runnable{
         spawn = new Spawn(handler,hud,this);
         new window(WIDTH, HEIGHT,"Robotron", this);
         r = new Random();
+        //AudioPlayer audioPlayer = new AudioPlayer();
+        //audioPlayer.play("mp3", "darude.mp3");
+
 
 //        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player, handler));
 //        handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
@@ -122,6 +127,7 @@ public class Game extends Canvas implements Runnable{
             hud.tick();
             spawn.tick();
 
+
         }  if (GameState == State.Menu || GameState == State.Help || GameState == State.End) {
             menu.tick();
         }
@@ -160,7 +166,7 @@ public class Game extends Canvas implements Runnable{
     }
 
     public static void  main(String args[]){
-        new Game();
+        Game.getInstance();
     }
 
     public KeyInput getKeyInput() {

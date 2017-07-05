@@ -2,8 +2,9 @@ package Robotron;
 
 import com.sun.javafx.scene.traversal.Direction;
 import javafx.scene.shape.Circle;
-
+import Robotron.mediaplayer.*;
 import java.awt.*;
+import java.applet.Applet;
 
 /**
  * Created by Steven on 16-Jun-17.
@@ -13,12 +14,21 @@ public class Projectile extends GameObject {
     private float velX;
     private float velY;
     Spawn p;
+    public AudioPlayer audioPlayer;
 
-    public Projectile(float x, float y, ID id, Handler handler, float velX, float velY) {
+
+
+
+
+
+
+public Projectile(float x, float y, ID id, Handler handler, float velX, float velY) {
         super(x, y, id);
         this.handler = handler;
         this.velX = velX;
         this.velY = velY;
+        this.audioPlayer = new AudioPlayer();
+
     }
 
     public Rectangle getBounds() {
@@ -51,6 +61,10 @@ public class Projectile extends GameObject {
                         handler.removeObject(tempObject);
                         p.scoreKeep += 50;
                         System.out.println("ScoreKeep" + p.scoreKeep);
+                        //audioPlayer.play("mp3", "darude.mp3");
+/*                        Game.audioPlayer.play("mp4", "alone.mp4");
+                        Game.audioPlayer.play("vlc", "far far away.vlc");
+                        Game.audioPlayer.play("avi", "mind me.avi");*/
 
 
 
