@@ -20,13 +20,8 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private HUD hud;
     private KeyInput keyInput;
-    private Player p;
-    public BasicEnemy be;
-    public SmartEnemy sm;
     private Spawn spawn;
-    // helloen l
     private Menu menu;
-    //private AudioPlayer audioPlayer;
 
     /**
      * Additional enum to allow the game to differentiate which state it is in
@@ -35,10 +30,13 @@ public class Game extends Canvas implements Runnable {
         Menu, Help, Game, End,
     }
 
-    ;
+
 
     public State GameState = State.Menu;
 
+    /**
+     * Method which creates an instance of Game and all required additional classes
+     */
     private Game() {
         hud = new HUD();
         handler = new Handler();
@@ -52,45 +50,49 @@ public class Game extends Canvas implements Runnable {
         new window(WIDTH, HEIGHT, "Robotron", this);
         r = new Random();
 
-//        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32, ID.Player, handler));
-//        handler.addObject(new BasicEnemy(500,550,ID.BasicEnemy, handler));
-//        handler.addObject(new BasicEnemy(120,480,ID.BasicEnemy, handler));
-//        handler.addObject(new BasicEnemy(420,80,ID.BasicEnemy, handler));
-//        handler.addObject(new MineEnemy(500,550,ID.MineEnemy, handler));
-//        handler.addObject(new MineEnemy(120,480,ID.MineEnemy, handler));
-//        handler.addObject(new MineEnemy(420,80,ID.MineEnemy, handler));
-//
-//        handler.addObject(new HealingEnemy(300,300,ID.HealingEnemy,handler));
-//        handler.addObject(new SmartEnemy(100,100,ID.SmartEnemy,handler));
-
-
     }
 
+    /**
+     * Method used to create a singleton instance of Game
+     */
     private synchronized static void createInstance() {
         if (_instance == null) _instance = new Game();
     }
 
+    /**
+     * Method used to return a singleton instance of Game
+     * @return Returns a singleton instance of Game
+     */
     public static Game getInstance() {
         if (_instance == null) createInstance();
         return _instance;
     }
 
+    /**
+     * Method used to start the game
+     */
     public synchronized void start() {
         thread = new Thread(this);
         thread.start();
-        running = true;     //Thread on
+        running = true;
 
     }
 
+    /**
+     * Method used to stop the game from running
+     */
     public synchronized void stop() {
         try {
             thread.join();
-            running = false; //thread not on kill the thread
+            running = false;
         } catch (Exception e) {
-            e.printStackTrace();//tell us why it couldnt do it
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Method which allows the program to keep running
+     */
     public void run() {
         this.requestFocus();
         long lastTime = System.nanoTime();
@@ -98,7 +100,6 @@ public class Game extends Canvas implements Runnable {
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer = System.currentTimeMillis();
-        int frames = 0;
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -109,12 +110,9 @@ public class Game extends Canvas implements Runnable {
             }
             if (running)
                 render();
-            frames++;
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                //System.out.println("fps = " + frames);
-                frames = 0;
             }
 
         }
@@ -122,6 +120,9 @@ public class Game extends Canvas implements Runnable {
 
     }
 
+    /**
+     * Method used to call the update methods of all classes accordingly
+     */
     private void tick() {
         handler.tick();
         if (GameState == State.Game) {
@@ -136,6 +137,9 @@ public class Game extends Canvas implements Runnable {
 
     }
 
+    /**
+     * Method which creates an instance of Graphics and calls the render methods of all classes on it
+     */
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null) {
@@ -160,11 +164,18 @@ public class Game extends Canvas implements Runnable {
         bs.show();
     }
 
+    /**
+     * Method used to make sure objects don't extend their boundaries
+     * @param var Value that needs to be checked
+     * @param min Value used to check if var is not too low
+     * @param max Value used to check if var is not too high
+     * @return Returns the value of var
+     */
     public static float clamp(float var, float min, float max) {
         if (var >= max)
-            return var = max;
+            return max;
         else if (var <= min)
-            return var = min;
+            return min;
         else
             return var;
     }
